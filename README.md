@@ -23,6 +23,8 @@ algorithm-study/
 1. **브랜치 생성**
 
    ```bash
+   git checkout main
+   git pull origin main
    git checkout -b daewook/2025-08-04
    ```
 
