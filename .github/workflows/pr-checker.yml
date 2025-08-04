@@ -1,0 +1,33 @@
+name: PR 활동 기록 업데이트
+
+on:
+  schedule:
+    - cron: "0 1 * * *" # 매일 01:00 UTC → 한국시간 오전 10시
+  workflow_dispatch: # 수동 실행도 가능
+
+jobs:
+  track-prs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+
+      - name: Install requests
+        run: pip install requests
+
+      - name: Run PR tracking script
+        run: python .github/scripts/update_pr_tracker.py
+
+      - name: Commit & Push if changed
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add README.md
+          git commit -m "chore: PR 활동 기록 업데이트" || echo "No changes"
+          git push
