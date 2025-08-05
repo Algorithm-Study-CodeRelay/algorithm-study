@@ -30,6 +30,7 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
+          git pull --rebase origin main
           git add README.md
           git commit -m "chore: PR 활동 기록 업데이트" || echo "No changes"
           git push
