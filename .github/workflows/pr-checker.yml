@@ -3,7 +3,7 @@ name: PR 활동 기록 업데이트
 on:
   schedule:
     - cron: "0 1 * * *" # 매일 01:00 UTC → 한국시간 오전 10시
-  workflow_dispatch: # 수동 실행도 가능
+  workflow_dispatch:
 
 jobs:
   track-prs:
@@ -11,12 +11,12 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.13'
+          python-version: 3.10
 
       - name: Install requests
         run: pip install requests
@@ -26,11 +26,23 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python .github/scripts/update_pr_tracker.py
 
-      - name: Commit & Push if changed
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git pull --rebase origin main
-          git add README.md
-          git commit -m "chore: PR 활동 기록 업데이트" || echo "No changes"
-          git push
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: "chore: PR 활동 기록 업데이트"
+          branch: bot/update-pr-tracker
+          title: "chore: PR 활동 기록 업데이트"
+          body: "README 자동 업데이트입니다. merge되면 기록이 반영됩니다."
+          labels: automated
+          delete-branch: true
+          base: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for PR
+        if: steps.cpr.outputs.pull-request-number != ''
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
