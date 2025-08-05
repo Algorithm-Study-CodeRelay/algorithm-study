@@ -10,6 +10,7 @@ API_URL = f"https://api.github.com/repos/{REPO}/pulls?state=closed&per_page=100"
 
 # 날짜별 사용자별 PR 기록
 activity = defaultdict(lambda: defaultdict(str))
+user_avatars = {}
 
 def get_prs():
     r = requests.get(API_URL, headers=HEADERS)
@@ -36,7 +37,7 @@ today = datetime.utcnow().date()
 all_dates = [str(today - timedelta(days=i)) for i in range(14, -1, -1)]
 
 # 유저 목록 (PR 한 사람 기준)
-all_users = sorted({u for d in activity.values() for u in d})
+all_users = sorted({u for d in activity.values() for u in d if u != "github-actions[bot]"})
 
 header_cells = []
 for u in all_users:
