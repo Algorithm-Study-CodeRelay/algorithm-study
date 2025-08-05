@@ -30,6 +30,9 @@ for pr in prs:
 today = datetime.utcnow().date()
 all_dates = [str(today - timedelta(days=i)) for i in range(29, -1, -1)]  # 오래된 날짜부터
 
+# 유저 목록 (PR 한 사람 기준)
+all_users = sorted({u for d in activity.values() for u in d})
+
 # 테이블 생성
 lines = [
     "| Date       | " + " | ".join(u.capitalize() for u in all_users) + " |",
