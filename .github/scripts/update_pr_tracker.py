@@ -26,9 +26,9 @@ for pr in prs:
     date_str = pr["created_at"][:10]
     activity[date_str][user] = "✅"
 
-# 날짜 정렬
-all_dates = sorted(activity.keys())
-all_users = sorted({u for d in activity.values() for u in d})
+# 최근 30일 날짜 리스트 생성 (created_at 기준)
+today = datetime.utcnow().date()
+all_dates = [str(today - timedelta(days=i)) for i in range(29, -1, -1)]  # 오래된 날짜부터
 
 # 테이블 생성
 lines = [
@@ -42,14 +42,17 @@ for date in all_dates:
         row.append(activity[date].get(user, "❌"))
     lines.append("| " + " | ".join(row) + " |")
 
-# README 업데이트
+# README 업데이트 (마커 기준)
 with open("README.md", "r") as f:
     content = f.read()
 
-start = content.find("| Date")
-end = content.find("\n", content.find("---", start))
+start_marker = "<!--PR_TABLE_START-->"
+end_marker = "<!--PR_TABLE_END-->"
 
-new_table = "\n".join(lines)
+start = content.find(start_marker) + len(start_marker)
+end = content.find(end_marker)
+
+new_table = "\n" + "\n".join(lines) + "\n"
 updated = content[:start] + new_table + content[end:]
 
 with open("README.md", "w") as f:
