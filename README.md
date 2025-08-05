@@ -73,7 +73,6 @@ algorithm-study/
    ```bash
    git checkout main
    git pull origin main
-   ```| Date       | Triodw |
-|------------|-------|
-| 2025-08-04 | ✅ |
-| 2025-08-05 | ✅ |
+   ```
+
+
