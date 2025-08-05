@@ -22,6 +22,8 @@ jobs:
         run: pip install requests
 
       - name: Run PR tracking script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python .github/scripts/update_pr_tracker.py
 
       - name: Commit & Push if changed
