@@ -94,7 +94,6 @@ algorithm-study/
 <!--PR_TABLE_START-->
 | Date       | <img src="https://avatars.githubusercontent.com/u/104821183?v=4" width="20" height="20"/><br/>Jinn-ie | <img src="https://avatars.githubusercontent.com/u/117421342?v=4" width="20" height="20"/><br/>Triodw |
 |------------|:---:|:---:|
-| 2025-08-30 | ❌ | ❌ |
 | 2025-08-31 | ❌ | ❌ |
 | 2025-09-01 | ❌ | ❌ |
 | 2025-09-02 | ❌ | ❌ |
@@ -109,4 +108,5 @@ algorithm-study/
 | 2025-09-11 | ✅ | ✅ |
 | 2025-09-12 | ❌ | ✅ |
 | 2025-09-13 | ❌ | ❌ |
+| 2025-09-14 | ❌ | ❌ |
 <!--PR_TABLE_END-->
