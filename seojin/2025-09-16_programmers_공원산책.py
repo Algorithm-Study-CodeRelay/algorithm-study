@@ -6,6 +6,7 @@ def solution(park, routes):
     for i in range(h):  # S의 위치 찾기
         if 'S' in park[i]:
             x, y = park[i].index('S'), i
+            break
             
     for route in routes:
         
